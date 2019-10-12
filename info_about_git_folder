@@ -1,0 +1,151 @@
+* Run git init command in the directory which you need to put into the git repository
+    Then below .git directory is formed.
+.Git Directory Contents
+We're about to take a look at the .git directory...it's not vital for this course, though, so don't worry about memorizing anything, it's here if you want to dig a little deeper into how Git works under the hood.
+
+Here's a brief synopsis on each of the items in the .git directory:
+
+ * config file - where all project specific configuration settings are stored.
+    From the Git Book:
+ 
+    Git looks for configuration values in the configuration file in the Git directory (.git/config) of whatever repository you’re currently using. These values are specific to that single repository.
+ 
+    For example, let's say you set that the global configuration for Git uses your personal email address. If you want your work email to be used for a specific project rather than your personal email, that change would be added to this file.
+ 
+ * description file - this file is only used by the GitWeb program, so we can ignore it
+ * hooks directory - this is where we could place client-side or server-side scripts that we can use to hook into Git's different lifecycle events
+        * Git can be customised to git-enforced policy - like letting only certain user commits into the branch by using server-side hook
+ * info directory - contains the global excludes file
+ * objects directory - this directory will store all of the commits we make
+ * refs directory - this directory holds pointers to commits (basically the "branches" and "tags")
+
+
+############################# connecting git to git repository ####################
+
+* setting up git config username and email id
+    # sets up Git with your name 
+    $ git config --global user.name "Your name here"
+    $ git config --global user.email "your_email@example.com"
+    # makes sure that Git output is colored
+    $ git config --global color.ui true
+    $ git config --global core.editor <any other editor>  
+    # LF will be replaced by CRLF -- warning appeared 
+    # In Unix systems the end of a line is represented with a line feed (LF). In windows a line is 
+    # represented with a carriage return (CR) and a line feed (LF) thus (CRLF). when you get code 
+    # from git that was uploaded from a unix system they will only have an LF.
+    $ git config core.autocrlf false
+
+* setting up ssh in computer
+    $ ssh-keygen -t rsa -C "your_email@example.com"
+    working with passphrase
+    $ ssh-keygen -p
+
+* adding ssh key to ssh-agent
+    for manually
+        # start the ssh-agent in the background
+        $ eval $(ssh-agent -s)
+        > Agent pid 59566
+    for automatic addition 
+        env=~/.ssh/agent.env
+
+        agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
+        
+        agent_start () {
+            (umask 077; ssh-agent >| "$env")
+            . "$env" >| /dev/null ; }
+        
+        agent_load_env
+        
+        # agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2= agent not running
+        agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
+        
+        if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
+            agent_start
+            ssh-add
+        elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
+            ssh-add
+        fi
+        
+        unset env
+    add below command either in .bash_profile or enter manually
+        $ ssh-add ~/.ssh/id_rsa
+        $ ssh-add -t <time in seconds>
+* add SSH key to github
+    copy the ssh key
+        $ clip < ~/.ssh/id_rsa.pub
+        # Copies the contents of the id_rsa.pub file to your clipboard
+    add key on website
+* for testing 
+    $ ssh -T git@github.com
+
+##############################  connecting git to git repository #############################
+
+------ create a git repo -------
+* git init - repository created
+------ review a repo's history -------
+* git clone <http://address>
+* git status
+    first thing to do every time 
+* git log
+    By default, this command displays:
+        the SHA
+        the author
+        the date
+        and the message
+* git log --oneline
+    short and concise
+* git log --stat
+    displays the file(s) that have been modified
+    displays the number of lines that have been added/removed
+    displays a summary line with the total number of modified files and lines that have been added/removed
+* git log -p [--patch]
+    displays the files that have been modified
+    displays the location of the lines that have been added/removed
+    displays the actual changes that have been made 
+    * git log -p <7_key_SHA>
+    -w :  to ignore changes to whitespace
+* git show similar to git log -p
+    git log -show <7_key_SHA>
+--------Add commit to a repo----------
+$ git add <file1> <file2> … <fileN>
+    This command:
+        * is used to move files from the Working Directory to the Staging Index
+        * takes a space-separated list of file names
+        * alternatively, the period . can be used in place of a list of files to tell Git to add the current directory (and all nested files)
+$ git commit
+    * command takes files from the Staging Index and saves them in the repository
+$ git diff
+    * command is used to see changes that have been made but haven't been committed, yet
+* To recap, the .gitignore file is used to tell Git about the files that Git should not track. This file should be placed in the same directory that the .git directory is in
+    * Globbing lets you use special characters to match patterns/characters
+        blank lines can be used for spacing
+        # - marks line as a comment
+        * - matches 0 or more characters
+        ? - matches 1 character
+        [abc] - matches a, b, _or_ c
+        ** - matches nested directories - a/**/z matches
+            a/z
+            a/b/z
+            a/b/c/z
+
+--------Create a remote git repository ---------
+A bare repository is a git repository without a working copy, therefore the content of .git is top-level for that directory.
+Use a non-bare repository to work locally and a bare repository as a central server/hub to share your changes with other people. For example, when you create a repository on github.com, it is created as a bare repository.
+
+So, in your computer:
+    git init
+    touch README
+    git add README
+    git commit -m "initial commit"
+
+on the server:
+    cd /srv/git/project
+    git init --bare
+
+Then on the client, you push:
+    git push username@server:/srv/git/project master
+
+The repository on the server side is going to get commits via pull and push, and not by you editing files and then commiting them in the server machine, therefore it is a bare repository.
+Recommended setup is: use a non-bare repository to work locally and a bare repository as a hub or central server to push and pull from.
+
+
