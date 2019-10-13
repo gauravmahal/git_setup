@@ -148,4 +148,11 @@ Then on the client, you push:
 The repository on the server side is going to get commits via pull and push, and not by you editing files and then commiting them in the server machine, therefore it is a bare repository.
 Recommended setup is: use a non-bare repository to work locally and a bare repository as a hub or central server to push and pull from.
 
-
+-------pushing data into github -------
+* Start a new github repository through website
+* Run below commands
+    # connect origin to the server
+    git remote add origin git@github.com:gauravmahal/git_setup.git
+    # push local changes from master to remote server
+    git push -u origin master
+*
