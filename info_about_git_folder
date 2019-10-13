@@ -155,4 +155,71 @@ Recommended setup is: use a non-bare repository to work locally and a bare repos
     git remote add origin git@github.com:gauravmahal/git_setup.git
     # push local changes from master to remote server
     git push -u origin master
-*
+$ git pull
+    command is used to get remote repo to local 
+
+--------Tagging --------
+$ git tag 
+    * command is used to add a marker on a specific commit. The tag does not move around as new commits are added
+    * add a tag to the most recent commit
+    * add a tag to a specific commit if a SHA is passed
+
+---------Branching and Merging---------
+$ git branch
+    * command is used to interact with Git's branches
+    * It can be used to:
+        - list all branch names in the repository
+        - create new branches
+        - delete branches (-d for deleting and -D for explicit deleting)
+$ git checkout 
+    * used to switch between branches
+    * Running this command will:
+        - remove all files and directories from the Working Directory that Git is tracking
+            - (files that Git tracks are stored in the repository, so nothing is lost)
+        - go into the repository and pull out all of the files and directories of the commit that the branch points to
+$ git reset --hard <branch name >^
+    * use this command to undo the merge
+    * "Relative Commit Reference" and indicates "the parent commit"
+$ git merge <name-of-branch-to-merge-in>
+    * When a merge happens, Git will:
+        - look at the branches that it's going to merge
+        - look back along the branch's history to find a single commit that both branches have in their commit history
+        - combine the lines of code that were changed on the separate branches together
+        - makes a commit to record the merge
+    * There are two types of merges:
+        - Fast-forward merge – the branch being merged in must be ahead of the checked out branch. The checked out branch's pointer will just be moved forward to point to the same commit as the other branch.
+        - the regular type of merge
+            - two divergent branches are combined
+            - a merge commit is created
+$ git log --oneline --graph --decorate --all
+
+* merge conflict indicators explanation -
+    - <<<<<<< HEAD everything below this line (until the next indicator) shows you what's on the current branch
+    - ||||||| merged common ancestors everything below this line (until the next indicator) shows you what the original lines were
+    - ======= is the end of the original lines, everything that follows (until the next indicator) is what's on the branch that's being merged in
+    - >>>>>>> heading-update is the ending indicator of what's on the branch that's being merged in (in this case, the heading-update branch)
+
+-------- Undoing Changes --------
+$ git commit --amend
+    * modify the last commit 
+    * edit, save and stage the file(s)
+    * run above command
+$ git revert <SHA-of-commit-to-revert>
+    * command is used to reverse a previously made commit
+    * it will undo the changes that were made by the provided commit
+    * it creates a new commit to record the change 
+$ git reflog 
+    * Git does keep track of everything for about 30 days before it completely erases anything. to access it use above command
+* Relative Commit Reference
+    - Following special characters called "Ancestry References"
+        * ^ – indicates the parent commit
+        * ~ – indicates the first parent commit
+            for eg. - HEAD^^^2 (this is the grandparent's (HEAD^^) second parent (^2))
+$ git reset <reference-to-commit>
+    - It can be used to:
+        * move the HEAD and current branch pointer to the referenced commit
+        * erase commits with the --hard flag
+        * moves committed changes to the staging index with the --soft flag
+        * unstages committed changes --mixed flag
+
+
