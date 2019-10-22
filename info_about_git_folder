@@ -222,4 +222,78 @@ $ git reset <reference-to-commit>
         * moves committed changes to the staging index with the --soft flag
         * unstages committed changes --mixed flag
 
+-------- Things Need to install, How and from where --------
+## make
 
+    1- method 
+    - Go to [ezwinports](https://sourceforge.net/projects/ezwinports/files/).
+    - Download `make-4.1-2-without-guile-w32-bin.zip` (get the version without guile).
+    - Extract zip.
+    - Copy the contents to your `Git\mingw64\` merging the folders, but do NOT overwrite/replace any existing files.
+
+    2- method
+    - You have to install mingw-get and after that you can run mingw-get install msys-make to have the command make available.
+    - Here is a link for what you want http://www.mingw.org/wiki/getting_started
+    - add it the path variable 
+    - mingw-get install g++ //start using it
+
+## libreoffice 
+
+    - download source code
+    - https://wiki.documentfoundation.org/Development/BuildingOnLinux
+    - https://wiki.documentfoundation.org/Development/BuildingOnWindows
+
+--------- Optionals downloads
+Here are some utilities to add:
+
+## Wget
+
+    - Wget is a computer program that retrieves content from web servers. Its name derives from World Wide Web and get
+    - Download the lastest wget binary for windows from [eternallybored](https://eternallybored.org/misc/wget/) 
+        (they are available as a zip with documentation, or just an exe)
+    - If you downloaded the zip, extract all (if windows built in zip utility gives an error, use [7-zip](http://www.7-zip.org/)).
+    - Rename the file `wget64.exe` to `wget.exe` if necessary.
+    - Move `wget.exe` to your `Git\mingw64\bin\`.
+    *Note: I have noticed some bugs when using Wget on Git Bash to create WARC files. For more complex use of Wget, consider [Cygwin](https://evanwill.github.io/_drafts/notes/cygwin.html) instead.*
+
+## Hugo
+
+    - [Hugo](http://gohugo.io/) static site generator can be downloaded as a binary and does not have a installer.
+    - Dropping it into your `bin` easily adds it to your Git Bash path.
+    - Grab the Windows 64-bit version from the [releases page](https://github.com/gohugoio/hugo/releases).
+    - Unzip the download, then copy `hugo.exe` into your `Git\mingw64\bin` directory.
+
+## Xpdf
+
+    [Xpdf](http://www.xpdfreader.com/index.html) is a handy utility for manipulating PDF files.
+    - Download the [windows version "Xpdf tools"](http://www.xpdfreader.com/download.html).
+    - Extract zip.
+    - Copy the contents of `xpdf-tools-win-4.00\bin64\` into your `Git\mingw64\bin\`.
+    - Check the [docs](http://www.xpdfreader.com/support.html) to get started with tools such as `pdftotext` and `pdftopng`.
+
+## Nano
+
+    GNU nano is an easy to use command line text editor for Unix and Linux operating systems
+
+## Winfield 
+    - it used to convert docs to text format -- for linux system
+    - http://www.winfield.demon.nl/#Programmer
+    - download programmer's version 
+    - make all 
+    - make install
+    - copy the file 'fontnames' and one or more mapping files from the Resources directory to the $HOME/.antiword directory 
+
+## Catdoc 
+
+    - Changes Word files to ASCII text
+    - Catdoc is a MS Word file decoding tool that doesn't attempt to analyze file formatting (it just extracts readable text)
+    - But is able to handle all versions of Word and convert character encodings
+    - https://directory.fsf.org/wiki/Catdoc
+
+------- Helpful links and hacks
+## linking error
+    
+    - https://stackoverflow.com/questions/18641864/git-bash-shell-fails-to-create-symbolic-links/40914277#40914277
+    - https://zzamboni.org/post/making-cygwin-windows-and-emacs-understand-the-same-symlinks/
+## Build All error "sh: C:\Program: No such file or directory
+    - Always add SHELL=cmd.exe to the beginning of your make file

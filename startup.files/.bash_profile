@@ -24,9 +24,15 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 export PS1="$darkGreen\u$pink\$(__git_ps1)$white \W
 $ $reset"
 
+# python path adding to path and making executable alias
 export PATH="$PATH:/c/ProgramData/Anaconda3:/c/ProgramData/Anaconda3/Scripts"
 alias python="winpty python.exe"
 
+# minimual GNU for windows path addition - use for compiler setup installation
+export PATH="$PATH:/c/MinGW/bin/"
+
+# for making hard link in general and soft link in administartor mode
+export MSYS="winsymlinks:nativestrict"
 
 ##### Auto-launching ssh-agent on Git for Windows 
 env=~/.ssh/agent.env
