@@ -102,7 +102,7 @@ Here's a brief synopsis on each of the items in the .git directory:
     displays the files that have been modified
     displays the location of the lines that have been added/removed
     displays the actual changes that have been made 
-    * git log -p <7_key_SHA>
+* git log -p <7_key_SHA>
     -w :  to ignore changes to whitespace
 * git show similar to git log -p
     git log -show <7_key_SHA>
@@ -242,6 +242,12 @@ $ git reset <reference-to-commit>
     - download source code
     - https://wiki.documentfoundation.org/Development/BuildingOnLinux
     - https://wiki.documentfoundation.org/Development/BuildingOnWindows
+
+## gvim
+    
+    - Download executable from below
+    - https://www.vim.org/download.php#pc 
+    - run it and then add it to the path variable
 
 --------- Optionals downloads
 Here are some utilities to add:

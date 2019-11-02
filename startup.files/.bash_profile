@@ -2,6 +2,7 @@ Date
 echo 'Hi There!!'
 
 # Enable tab completion
+# https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash - repository 
 source ~/.udacity-terminal-config/git-completion.bash
 
 # Change command prompt
@@ -34,6 +35,9 @@ export PATH="$PATH:/c/MinGW/bin/"
 # for making hard link in general and soft link in administartor mode
 export MSYS="winsymlinks:nativestrict"
 
+# running gvim in git platform 
+export PATH="$PATH:/c/Program Files (x86)/Vim/vim81/"
+
 ##### Auto-launching ssh-agent on Git for Windows 
 env=~/.ssh/agent.env
 
@@ -57,3 +61,4 @@ fi
 
 unset env
 ssh-add ~/.ssh/id_rsa
+source ~/.aliases
